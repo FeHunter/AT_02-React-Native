@@ -3,6 +3,8 @@ import { View, ScrollView, Text, Image, FlatList, StyleSheet, Pressable, Dimensi
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FirebaseRoutes from '../../../assets/FirebaseRoutes';
 import { ImageCard } from '../../../components/gallary/ImageCard';
+import app from '../../../assets/Firebase';
+import { getStorage, ref, uploadString, getDownloadURL, listAll } from 'firebase/storage';
 
 export function GallaryPhotosTab ({navigation}){
 
@@ -10,13 +12,8 @@ export function GallaryPhotosTab ({navigation}){
   const [status, setStatus] = useState('');
 
   useEffect(()=>{
-    fetch(`${FirebaseRoutes.mainURL}${FirebaseRoutes.gallary}.json`)
-    .then(res => {return res.json()})
-    .then(res => { setGallary(res) })
-    .catch(error => {
-      console.log(error.message);
-    })
-  }, [navigation]);
+    getPhotos();
+  }, []);
 
   // Orientation
   const [horizontal, setHorizontal] = useState(false);
@@ -30,6 +27,18 @@ export function GallaryPhotosTab ({navigation}){
       Dimensions.removeEventListener('change', onChange);
     }
   }, []);
+
+  async function getPhotos (){
+    try {
+      const firebaseStorage = getStorage(app);
+      const photosRef = ref(firebaseStorage);
+      const listResult = await listAll(photosRef);
+      const photoUrls = await Promise.all(listResult.items.map((item) => getDownloadURL(item)));
+      setGallary(photoUrls);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   function removeFoto (photo){
       let update = [];
