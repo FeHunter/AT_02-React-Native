@@ -54,7 +54,7 @@ const styleVertical = StyleSheet.create({
     fontSize: 26,
   },
   imagem: {
-    width: '90%',
+    width: '100%',
     height: 200,
     resizeMode: 'contain',
   },

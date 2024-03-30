@@ -84,7 +84,7 @@ export function Events({ navigation }) {
     }
     return (
       <FlatList
-        contentContainerStyle={style.list}
+        contentContainerStyle={styles.list}
         data={updateList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
@@ -95,14 +95,12 @@ export function Events({ navigation }) {
     );
   }
 
-  const style = orientation ? styleHorizontal : styleVertical;
-
   const ViewList =
     events.length > 0 &&
     searchTerm.length === 0 &&
     pickerFilter === 'Sem Filtro' ? (
       <FlatList
-        contentContainerStyle={style.list}
+        contentContainerStyle={styles.list}
         data={events}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
@@ -113,7 +111,7 @@ export function Events({ navigation }) {
       filter()
     );
   return (
-    <View style={style.container}>
+    <View style={styles.container}>
       {isLoading ? (
         <ActivityIndicator size="small" color="#0000ff" />
       ) : (
@@ -130,16 +128,24 @@ export function Events({ navigation }) {
   );
 }
 
-const styleVertical = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+  },
+  listContainer: {
+    flex: 1,
     width: '100%',
     height: '100%',
   },
   list: {
     width: '100%',
-    height: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
+    overflowY: 'scroll',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
-
-const styleHorizontal = StyleSheet.create({});

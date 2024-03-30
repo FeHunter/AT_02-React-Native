@@ -1,64 +1,54 @@
-import { Pressable, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import { useEffect, useState } from 'react';
+import { Pressable, View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import Routes from '../../assets/Routes';
 
 export function EventCard({ item, navigation }) {
-  const [orientation, setOrientation] = useState(false);
-
-  useEffect(() => {
-    // Orientação
-    const updateOrientation = () => {
-      const { width, height } = Dimensions.get('window');
-      setOrientation(width > height ? true : false);
-    };
-    Dimensions.addEventListener('change', updateOrientation);
-    return () => {
-      Dimensions.removeEventListener('change', updateOrientation);
-    };
-  });
-
-  const style = orientation ? styleHorizontal : styleVertical;
 
   return (
     <Pressable
-      style={style.card}
+      style={styles.card}
       onPress={() => {
         navigation.navigate(Routes.eventDetails, {item: item});
       }}>
-      <Text style={style.titulo}>{item.titulo}</Text>
-      <Image source={{ uri: item.imagem }} style={style.imagem} />
-      <Text style={style.preco}>R${item.preco}</Text>
+      <Image source={{ uri: item.imagem }} style={styles.imagem} />
+      <View style={styles.infosContent}>
+        <Text style={styles.title}>{item.titulo}</Text>
+        <Text style={styles.preco}>R${item.preco}</Text>
+      </View>
     </Pressable>
   );
 }
 
-const styleVertical = StyleSheet.create({
+const styles = StyleSheet.create({
   card: {
-    width: 250,
-    alignItems: 'center',
-    borderWidth: 1,
-    marginVertical: 5,
-  },
-  titulo: {
-    textAlign: 'center',
-    fontSize: 20,
+    width: 300,
+    height: 250,
+    justifyContent: 'space-between',
+    borderBottomWidth: 2,
+    padding: 15,
+    marginVertical: 40,
+    marginHorizontal: 20,
+    elevation: 10, 
+    shadowColor: 'gray',
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
   },
   imagem: {
-    width: '90%',
-    height: 100,
-    marginVertical: 5,
+    width: '100%',
+    height: 150,
+    resizeMode: 'cover',
+  },
+  infosContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   preco: {
-    flexDirection: 'row',
-    flexWrap: 'wrrap',
     fontSize: 16,
-    marginVertical: 10,
-  },
-});
-
-const styleHorizontal = StyleSheet.create({
-  card: {
-    width: '100%',
-    borderWidth: 1,
-  },
+    fontStyle: 'italic',
+    color: 'gray',
+  }
 });

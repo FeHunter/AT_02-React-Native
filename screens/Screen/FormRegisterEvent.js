@@ -6,9 +6,9 @@ import {
   Dimensions,
   StyleSheet,
   Picker,
+  ActivityIndicator
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { getAssetByID } from 'react-native-web/dist/cjs/modules/AssetRegistry';
 
 export function FormRegisterEvent() {
 
@@ -26,11 +26,13 @@ export function FormRegisterEvent() {
   const [address, setAddress] = useState('');
   const [date, setDate] = useState('');
   const [price, setPrice] = useState('');
+  const [eventImage, setEventImage] = useState('');
   // Form Hotel
   const [hotelName, setHotelName] = useState('');
   const [hotelPrice, setHotelPrice] = useState('');
   const [hotelAddress, setHotelAddress] = useState('');
   const [hotelDetails, setHotelDetails] = useState('');
+  const [hotelImage, setHotelImage] = useState('');
 
   useEffect(() => {
 
@@ -53,8 +55,7 @@ export function FormRegisterEvent() {
     .then(res => {
       setEvents(res);
     })
-    .catch(error => { console.log(error.message) })
-    .finally(res => setIsLoading(false));
+    .catch(error => { console.log(error.message) });
   }
 
   function submitEvent (){
@@ -73,11 +74,13 @@ export function FormRegisterEvent() {
       descricao: description,
       endereco: address,
       preco: price,
+      imagem: eventImage,
       hospedagem: {
         diaria: hotelPrice,
         endereco: hotelAddress,
         hotel: hotelName,
         informacoes: hotelDetails,
+        imagem: hotelImage,
       }
     }
     console.log(event);
@@ -86,6 +89,8 @@ export function FormRegisterEvent() {
   }
 
   async function saveEvent (eventData) {
+    setStatus("Cadastrando evento");
+    setIsLoading(true);
     let upt = [...events];
     upt.push(eventData);
     upt = JSON.stringify(upt);
@@ -98,6 +103,7 @@ export function FormRegisterEvent() {
     })
     .then(res => {
       setStatus("Enviado com sucesso!");
+      setIsLoading(false);
       setTimeout(() => {
         setStatus("-");
       }, 2000);
@@ -109,17 +115,25 @@ export function FormRegisterEvent() {
   }
 
   function convertDateToTimestamp(dateString) {
-    const reversedDateString = dateString.split('/').reverse().join('/');
-    const timestamp = Date.parse(reversedDateString);
+    // Dividir a string da data em dia, mês e ano
+    const [day, month, year] = dateString.split('/');
+    
+    // Criar um objeto de data
+    const dateObject = new Date(`${year}-${month}-${day}`);
+    
+    // Obter o timestamp em milissegundos
+    const timestamp = dateObject.getTime();
+    
+    // Retornar o timestamp
     return timestamp;
   }
 
   const style = orientation ? styleHorizontal : styleVertical;
 
   // Data
-  const [dateDay, setDateDay] = useState();
-  const [dateMonth, setDateMonth] = useState();
-  const [dateYear, setDateYear] = useState();
+  const [dateDay, setDateDay] = useState(1);
+  const [dateMonth, setDateMonth] = useState(1);
+  const [dateYear, setDateYear] = useState(2024);
   const days = [];
   const months = [];
   const years = [];
@@ -168,6 +182,14 @@ export function FormRegisterEvent() {
           <TextInput
             onChangeText={setPrice}
             placeholder="R$"
+            style={style.input}
+          />
+        </View>
+        <View style={style.textCard}>
+          <Text style={style.text}>Imagem URL:</Text>
+          <TextInput
+            onChangeText={setEventImage}
+            placeholder="digite..."
             style={style.input}
           />
         </View>
@@ -238,6 +260,14 @@ export function FormRegisterEvent() {
           />
         </View>
         <View style={style.textCard}>
+          <Text style={style.text}>Imagem URL:</Text>
+          <TextInput
+            onChangeText={setHotelImage}
+            placeholder="digite..."
+            style={style.input}
+          />
+        </View>
+        <View style={style.textCard}>
           <Text style={style.text} keyboardType="decimal-pad">Preço da Diaria:</Text>
           <TextInput
             onChangeText={setHotelPrice}
@@ -247,6 +277,7 @@ export function FormRegisterEvent() {
         </View>
       </View>
       <Text style={style.statusMessage}>{status}</Text>
+      {isLoading ? <ActivityIndicator size={30} color="blue" /> : <Text></Text> }
       <Pressable onPress={submitEvent}><Text style={style.registerButton}>Cadastra Evento</Text></Pressable>
     </View>
   );
