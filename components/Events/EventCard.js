@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   title: {
-    fontSize: 20,
+    fontSize: '1.5em',
     fontWeight: 'bold',
   },
   preco: {
-    fontSize: 16,
+    fontSize: '1.2em',
     fontStyle: 'italic',
     color: 'gray',
   }

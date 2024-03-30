@@ -20,17 +20,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: '3em',
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
   },
   description: {
-    fontSize: 16,
+    fontSize: '1.2em',
     textAlign: 'justify',
   },
   footerText: {
-    fontSize: 16,
+    fontSize: '1em',
     color: 'gray',
     marginVertical: 10,
   },

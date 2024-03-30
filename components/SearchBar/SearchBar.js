@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderWidth: 1,
-    fontSize: 18,
+    fontSize: '1.em',
   },
   selecter: {
     width: 100,

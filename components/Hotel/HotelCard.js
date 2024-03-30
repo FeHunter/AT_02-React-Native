@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   titulo: {
-    fontSize: 24,
+    fontSize: '3em',
     textAlign: 'center',
     marginVertical: 10,
   },
@@ -54,15 +54,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   infoTextTitle: {
-    fontSize: 16,
+    fontSize: '1.1em',
     color: 'gray',
   },
   infoText: {
-    fontSize: 18,
+    fontSize: '1.2em',
     fontStyle: 'italic',
   },
   paragraph: {
-    fontSize: 18,
+    fontSize: '1.2em',
     marginVertical: 10,
   },
 });

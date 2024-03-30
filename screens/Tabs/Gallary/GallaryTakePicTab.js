@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   status: {
-    fontSize: 18,
+    fontSize: '1em',
     padding: 5,
     color: 'gray',
   },

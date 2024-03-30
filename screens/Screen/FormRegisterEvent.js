@@ -1,4 +1,5 @@
 import {
+  ScrollView,
   View,
   Text,
   TextInput,
@@ -139,137 +140,139 @@ export function FormRegisterEvent() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Cadastro de Evento</Text>
-      <View style={styles.form}>
-        <Text style={styles.formTitle}>Informações do Evento</Text>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Nome:</Text>
-          <TextInput onChangeText={setTitle} placeholder="digite..." style={styles.input} />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Descrição:</Text>
-          <TextInput
-            onChangeText={setDescription}
-            placeholder="digite..."
-            multiline
-            numberOfLines={3}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Local Endereço:</Text>
-          <TextInput
-            onChangeText={setAddress}
-            placeholder="digite..."
-            multiline
-            numberOfLines={2}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text} keyboardType="decimal-pad">Preço:</Text>
-          <TextInput
-            onChangeText={setPrice}
-            placeholder="R$"
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Imagem URL:</Text>
-          <TextInput
-            onChangeText={setEventImage}
-            placeholder="digite..."
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-        <View style={styles.dataSelectCard}>
-          <Text style={styles.text}>Dia:</Text>
-            <Picker
-              style={{ width: 50 }}
-              selectedValue={dateDay}
-              onValueChange={setDateDay}>
-              {days.map((item, index) => (
-                <Picker.Item key={'picker_day_' + index} {...item} />
-              ))}
-            </Picker>
+    <ScrollView style={{width: '100%', height: '100%'}}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Cadastro de Evento</Text>
+        <View style={styles.form}>
+          <Text style={styles.formTitle}>Informações do Evento</Text>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Nome:</Text>
+            <TextInput onChangeText={setTitle} placeholder="digite..." style={styles.input} />
           </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Descrição:</Text>
+            <TextInput
+              onChangeText={setDescription}
+              placeholder="digite..."
+              multiline
+              numberOfLines={3}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Local Endereço:</Text>
+            <TextInput
+              onChangeText={setAddress}
+              placeholder="digite..."
+              multiline
+              numberOfLines={2}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text} keyboardType="decimal-pad">Preço:</Text>
+            <TextInput
+              onChangeText={setPrice}
+              placeholder="R$"
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Imagem URL:</Text>
+            <TextInput
+              onChangeText={setEventImage}
+              placeholder="digite..."
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
           <View style={styles.dataSelectCard}>
-            <Text style={styles.text}>Mês:</Text>
-            <Picker
-              style={{ width: 50 }}
-              selectedValue={dateMonth}
-              onValueChange={setDateMonth}>
-              {months.map((item, index) => (
-                <Picker.Item key={'picker_month_' + index} {...item} />
-              ))}
-            </Picker>
+            <Text style={styles.text}>Dia:</Text>
+              <Picker
+                style={{ width: 50 }}
+                selectedValue={dateDay}
+                onValueChange={setDateDay}>
+                {days.map((item, index) => (
+                  <Picker.Item key={'picker_day_' + index} {...item} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.dataSelectCard}>
+              <Text style={styles.text}>Mês:</Text>
+              <Picker
+                style={{ width: 50 }}
+                selectedValue={dateMonth}
+                onValueChange={setDateMonth}>
+                {months.map((item, index) => (
+                  <Picker.Item key={'picker_month_' + index} {...item} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.dataSelectCard}>
+              <Text style={styles.text}>Ano:</Text>
+              <Picker
+                style={{ width: 80 }}
+                selectedValue={dateYear}
+                onValueChange={setDateYear}>
+                {years.map((item, index) => (
+                  <Picker.Item key={'picker_year_' + index} {...item} />
+                ))}
+              </Picker>
+            </View>
           </View>
-          <View style={styles.dataSelectCard}>
-            <Text style={styles.text}>Ano:</Text>
-            <Picker
-              style={{ width: 80 }}
-              selectedValue={dateYear}
-              onValueChange={setDateYear}>
-              {years.map((item, index) => (
-                <Picker.Item key={'picker_year_' + index} {...item} />
-              ))}
-            </Picker>
+        </View>
+        <View style={styles.form}>
+          <Text style={styles.formTitle}>Informações Sobre hospedagem</Text>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Nome:</Text>
+            <TextInput
+              onChangeText={setHotelName}
+              placeholder="digite..."
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Endereço Hotel:</Text>
+            <TextInput
+              onChangeText={setHotelAddress}
+              placeholder="digite..."
+              multiline
+              numberOfLines={2}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Detalhes Hotel:</Text>
+            <TextInput
+              onChangeText={setHotelDetails}
+              placeholder="digite..."
+              multiline
+              numberOfLines={2}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text}>Imagem URL:</Text>
+            <TextInput
+              onChangeText={setHotelImage}
+              placeholder="digite..."
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.textCard}>
+            <Text style={styles.text} keyboardType="decimal-pad">Preço da Diaria:</Text>
+            <TextInput
+              onChangeText={setHotelPrice}
+              placeholder="R$"
+              style={styles.input}
+            />
           </View>
         </View>
+        <Text style={styles.statusMessage}>{status}</Text>
+        {isLoading ? <ActivityIndicator size={30} color="blue" /> : <Text></Text> }
+        <Pressable onPress={submitEvent}><Text style={styles.registerButton}>Cadastra Evento</Text></Pressable>
       </View>
-      <View style={styles.form}>
-        <Text style={styles.formTitle}>Informações Sobre hospedagem</Text>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Nome:</Text>
-          <TextInput
-            onChangeText={setHotelName}
-            placeholder="digite..."
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Endereço Hotel:</Text>
-          <TextInput
-            onChangeText={setHotelAddress}
-            placeholder="digite..."
-            multiline
-            numberOfLines={2}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Detalhes Hotel:</Text>
-          <TextInput
-            onChangeText={setHotelDetails}
-            placeholder="digite..."
-            multiline
-            numberOfLines={2}
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text}>Imagem URL:</Text>
-          <TextInput
-            onChangeText={setHotelImage}
-            placeholder="digite..."
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.textCard}>
-          <Text style={styles.text} keyboardType="decimal-pad">Preço da Diaria:</Text>
-          <TextInput
-            onChangeText={setHotelPrice}
-            placeholder="R$"
-            style={styles.input}
-          />
-        </View>
-      </View>
-      <Text style={styles.statusMessage}>{status}</Text>
-      {isLoading ? <ActivityIndicator size={30} color="blue" /> : <Text></Text> }
-      <Pressable onPress={submitEvent}><Text style={styles.registerButton}>Cadastra Evento</Text></Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -282,7 +285,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
   title: {
-    fontSize: 20, 
+    fontSize: '2em', 
   },
   form: {
     width: '95%',
@@ -291,7 +294,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
   formTitle: {
-    fontSize: 16, 
+    fontSize: '1.2m', 
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
   },
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   text: {
-    fontSize: 16,
+    fontSize: '1.2m',
   },
   input: {
     width: '70%',
@@ -316,7 +319,7 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'green',
     borderRadius: 10,
-    fontSize: 18,
+    fontSize: '1.3m',
   },
   dataSelectCard: {
     flexDirection: 'row',
@@ -324,7 +327,7 @@ const styles = StyleSheet.create({
     width: 100,
   },
   statusMessage: {
-    fontSize: 14,
+    fontSize: '1m',
     fontStyle: 'italic',
     color: 'gray',
   }
