@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 
 export function FormRegisterEvent() {
   const [orientation, setOrientation] = useState(false);
-  const [selectFilter, setSelectFilter] = useState('Sem Filtro');
   const [status, setStatus] = useState('Enviado com sucesso!');
 
   useEffect(() => {
@@ -29,13 +28,21 @@ export function FormRegisterEvent() {
   const style = orientation ? styleHorizontal : styleVertical;
 
   // Data
-  const [dateDay, setDateDay] = useState('1');
+  const [dateDay, setDateDay] = useState();
+  const [dateMonth, setDateMonth] = useState();
+  const [dateYear, setDateYear] = useState();
   const days = [];
   const months = [];
   const years = [];
 
   for (let i = 1; i <= 31; i++) {
     days.push({ value: i, label: i });
+  }
+  for (let i = 1; i <= 12; i++) {
+    months.push({ value: i, label: i });
+  }
+  for (let i = 2024; i <= 2030; i++) {
+    years.push({ value: i, label: i });
   }
 
   return (
@@ -70,37 +77,37 @@ export function FormRegisterEvent() {
           <TextInput placeholder="R$" style={style.input} />
         </View>
         <View style={style.textCard}>
-          <View style={style.dataSelectCard}>
-            <Text style={style.text}>Data:</Text>
+        <View style={style.dataSelectCard}>
+          <Text style={style.text}>Dia:</Text>
             <Picker
               style={{ width: 50 }}
               selectedValue={dateDay}
               onValueChange={setDateDay}>
-              {days.map((item, index) => {
-                <Picker.Item key={'picker_day_' + index} {...item} />;
-              })}
+              {days.map((item, index) => (
+                <Picker.Item key={'picker_day_' + index} {...item} />
+              ))}
             </Picker>
           </View>
           <View style={style.dataSelectCard}>
             <Text style={style.text}>Mês:</Text>
             <Picker
               style={{ width: 50 }}
-              selectedValue={dateDay}
-              onValueChange={setDateDay}>
-              {days.map((item, index) => {
-                <Picker.Item key={'picker_day_' + index} {...item} />;
-              })}
+              selectedValue={dateMonth}
+              onValueChange={setDateMonth}>
+              {months.map((item, index) => (
+                <Picker.Item key={'picker_month_' + index} {...item} />
+              ))}
             </Picker>
           </View>
           <View style={style.dataSelectCard}>
             <Text style={style.text}>Ano:</Text>
             <Picker
-              style={{ width: 50 }}
-              selectedValue={dateDay}
-              onValueChange={setDateDay}>
-              {days.map((item, index) => {
-                <Picker.Item key={'picker_day_' + index} {...item} />;
-              })}
+              style={{ width: 80 }}
+              selectedValue={dateYear}
+              onValueChange={setDateYear}>
+              {years.map((item, index) => (
+                <Picker.Item key={'picker_year_' + index} {...item} />
+              ))}
             </Picker>
           </View>
         </View>
@@ -180,7 +187,7 @@ const styleVertical = StyleSheet.create({
   dataSelectCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 90,
+    width: 100,
   },
   statusMessage: {
     fontSize: 14,

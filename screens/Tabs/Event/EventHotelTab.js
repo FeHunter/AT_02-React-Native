@@ -23,10 +23,20 @@ export function EventHotelTab({ route }) {
       <Text style={style.titulo}>{item.hospedagem.hotel}</Text>
       <Image source={{uri: item.hospedagem.imagem}} style={style.imagem} />
       <View style={style.card}>
-        <Text style={style.paragraph}>Endereco: {item.hospedagem.endereco}</Text>
-        <Text style={style.paragraph}>Diaria: R${item.hospedagem.diaria}</Text>
-        <Text style={style.paragraph}>Detalhes: {item.hospedagem.informacoes}</Text>
+        <View style={style.infoCard}>
+          <Text style={style.infoTextTitle}>Endereco do Hotel:</Text>
+          <Text style={style.infoText}>{item.hospedagem.endereco}</Text>
+        </View>
+        <View style={style.infoCard}>
+          <Text style={style.infoTextTitle}>Diaria do Hotel:</Text>
+          <Text style={style.infoText}>R${item.hospedagem.diaria}</Text>
+        </View>
+        <View style={style.infoCard}>
+          <Text style={style.infoTextTitle}>Detalhes:</Text>
+          <Text style={style.infoText}>{item.hospedagem.informacoes}</Text>
+        </View>
       </View>
+      
     </View>
   );
 }
@@ -50,6 +60,18 @@ const styleVertical = StyleSheet.create({
   card: {
     width: '70%',
     height: 200,
+  },
+  infoCard: {
+    width: '80%',
+    marginVertical: 10,
+  },
+  infoTextTitle: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  infoText: {
+    fontSize: 18,
+    fontStyle: 'italic',
   },
   paragraph: {
     fontSize: 18,
