@@ -1,7 +1,10 @@
-import { Pressable, View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { Pressable, View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import Routes from '../../assets/Routes';
+import { useState } from 'react';
 
 export function EventCard({ item, navigation }) {
+
+  const [isLoading, setIsLoading] = useState(true);
 
   // Imagem padrão caso não seja fornicida alguma outra
   const imagem = item.imagem !== "" ?
@@ -13,7 +16,8 @@ export function EventCard({ item, navigation }) {
       onPress={() => {
         navigation.navigate(Routes.eventDetails, {item: item});
       }}>
-      <Image source={{ uri: imagem }} style={styles.imagem} />
+      <Image source={{ uri: imagem }} style={styles.imagem} onLoad={()=>{setIsLoading(false)}} />
+      {isLoading ? <ActivityIndicator size={20} color={"blue"} /> : <Text></Text>}
       <View style={styles.infosContent}>
         <Text style={styles.title}>{item.titulo}</Text>
         <Text style={styles.preco}>R${item.preco}</Text>
