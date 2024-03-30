@@ -9,6 +9,7 @@ const Routes = {
   eventDetails: 'Detalhes do Evento',
   eventInformations: 'Evento',
   eventHotel: 'Hospedagem',
+  eventImages: 'Fotos',
   gallaryPhotos: 'Minhas Fotos',
   gallaryTakePicture: 'Tira Fotos',
   registerEventForm: 'Formulario registra evento',

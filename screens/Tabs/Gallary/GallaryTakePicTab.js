@@ -68,7 +68,7 @@ export function GallaryTakePicTab() {
   };
 
   if (hasPermission === false) {
-    return <Text>Acesso a camera negado</Text>;
+    return <Text style={styles.status}>Acesso a camera negado</Text>;
   }
 
   return (

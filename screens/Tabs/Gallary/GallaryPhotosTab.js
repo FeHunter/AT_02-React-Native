@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   title: {
-    fontSize: '1.5em',
+    fontSize: '2em',
     textAlign: 'center',
     marginVertical: 5,
   },

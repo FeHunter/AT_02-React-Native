@@ -7,6 +7,7 @@ const Tab = createBottomTabNavigator();
 // Tabs
 import { EventDetailTab } from '../Tabs/Event/EventDetailTab';
 import { EventHotelTab } from '../Tabs/Event/EventHotelTab';
+import { EventImagesTab } from '../Tabs/Event/EventImagesTab';
 
 export function EventDetail({ route }) {
   const { item } = route.params;
@@ -33,6 +34,11 @@ export function EventDetail({ route }) {
         <Tab.Screen
           name={Routes.eventInformations}
           component={EventDetailTab}
+          initialParams={{ item: item }}
+        />
+        <Tab.Screen
+          name={Routes.eventImages}
+          component={EventImagesTab}
           initialParams={{ item: item }}
         />
         <Tab.Screen
