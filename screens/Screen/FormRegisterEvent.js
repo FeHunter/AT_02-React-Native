@@ -60,16 +60,22 @@ export function FormRegisterEvent() {
 
   function submitEvent (){
     // Validação
-    // if(title.length < 3 || description.length < 3 || address.length < 3 || hotelAddress.length < 3 || hotelName.length < 3 || hotelDetails.length < 3){
-    //   setStatus("Preencher campos corretamente");
-    //   setTimeout(() => {
-    //     setStatus("-");
-    //   }, 2000);
-    //   return;
-    // }
-    const convertedDate = convertDateToTimestamp(`${dateDay}/${dateMonth}/${dateYear}`);
+    if (
+      title.length < 3 ||
+      description.length < 3 ||
+      address.length < 3 ||
+      hotelAddress.length < 3 ||
+      hotelName.length < 3 ||
+      hotelDetails.length < 3
+    ) {
+      setStatus("Preencher campos corretamente");
+      setTimeout(() => {
+        setStatus("-");
+      }, 2000);
+      return;
+    }
     const event = {
-      data: parseInt(convertedDate),
+      data: `${dateDay}/${dateMonth}/${dateYear}`,
       titulo: title,
       descricao: description,
       endereco: address,
@@ -109,26 +115,10 @@ export function FormRegisterEvent() {
       }, 2000);
     })
     .catch(error => {
-      setStatus("Algo deu errado, tente novamente");
+      setStatus(`Error: ${error.message}`);
       console.log(error.message);
     })
   }
-
-  function convertDateToTimestamp(dateString) {
-    // Dividir a string da data em dia, mês e ano
-    const [day, month, year] = dateString.split('/');
-    
-    // Criar um objeto de data
-    const dateObject = new Date(`${year}-${month}-${day}`);
-    
-    // Obter o timestamp em milissegundos
-    const timestamp = dateObject.getTime();
-    
-    // Retornar o timestamp
-    return timestamp;
-  }
-
-  const style = orientation ? styleHorizontal : styleVertical;
 
   // Data
   const [dateDay, setDateDay] = useState(1);
@@ -149,53 +139,53 @@ export function FormRegisterEvent() {
   }
 
   return (
-    <View style={style.container}>
-      <Text style={style.title}>Cadastro de Evento</Text>
-      <View style={style.form}>
-        <Text style={style.formTitle}>Informações do Evento</Text>
-        <View style={style.textCard}>
-          <Text style={style.text}>Nome:</Text>
-          <TextInput onChangeText={setTitle} placeholder="digite..." style={style.input} />
+    <View style={styles.container}>
+      <Text style={styles.title}>Cadastro de Evento</Text>
+      <View style={styles.form}>
+        <Text style={styles.formTitle}>Informações do Evento</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Nome:</Text>
+          <TextInput onChangeText={setTitle} placeholder="digite..." style={styles.input} />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text}>Descrição:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Descrição:</Text>
           <TextInput
             onChangeText={setDescription}
             placeholder="digite..."
             multiline
             numberOfLines={3}
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text}>Local Endereço:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Local Endereço:</Text>
           <TextInput
             onChangeText={setAddress}
             placeholder="digite..."
             multiline
             numberOfLines={2}
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text} keyboardType="decimal-pad">Preço:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text} keyboardType="decimal-pad">Preço:</Text>
           <TextInput
             onChangeText={setPrice}
             placeholder="R$"
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text}>Imagem URL:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Imagem URL:</Text>
           <TextInput
             onChangeText={setEventImage}
             placeholder="digite..."
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-        <View style={style.dataSelectCard}>
-          <Text style={style.text}>Dia:</Text>
+        <View style={styles.textCard}>
+        <View style={styles.dataSelectCard}>
+          <Text style={styles.text}>Dia:</Text>
             <Picker
               style={{ width: 50 }}
               selectedValue={dateDay}
@@ -205,8 +195,8 @@ export function FormRegisterEvent() {
               ))}
             </Picker>
           </View>
-          <View style={style.dataSelectCard}>
-            <Text style={style.text}>Mês:</Text>
+          <View style={styles.dataSelectCard}>
+            <Text style={styles.text}>Mês:</Text>
             <Picker
               style={{ width: 50 }}
               selectedValue={dateMonth}
@@ -216,8 +206,8 @@ export function FormRegisterEvent() {
               ))}
             </Picker>
           </View>
-          <View style={style.dataSelectCard}>
-            <Text style={style.text}>Ano:</Text>
+          <View style={styles.dataSelectCard}>
+            <Text style={styles.text}>Ano:</Text>
             <Picker
               style={{ width: 80 }}
               selectedValue={dateYear}
@@ -229,70 +219,70 @@ export function FormRegisterEvent() {
           </View>
         </View>
       </View>
-      <View style={style.form}>
-        <Text style={style.formTitle}>Informações Sobre hospedagem</Text>
-        <View style={style.textCard}>
-          <Text style={style.text}>Nome:</Text>
+      <View style={styles.form}>
+        <Text style={styles.formTitle}>Informações Sobre hospedagem</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Nome:</Text>
           <TextInput
             onChangeText={setHotelName}
             placeholder="digite..."
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text}>Endereço Hotel:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Endereço Hotel:</Text>
           <TextInput
             onChangeText={setHotelAddress}
             placeholder="digite..."
             multiline
             numberOfLines={2}
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text}>Detalhes Hotel:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Detalhes Hotel:</Text>
           <TextInput
             onChangeText={setHotelDetails}
             placeholder="digite..."
             multiline
             numberOfLines={2}
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text}>Imagem URL:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text}>Imagem URL:</Text>
           <TextInput
             onChangeText={setHotelImage}
             placeholder="digite..."
-            style={style.input}
+            style={styles.input}
           />
         </View>
-        <View style={style.textCard}>
-          <Text style={style.text} keyboardType="decimal-pad">Preço da Diaria:</Text>
+        <View style={styles.textCard}>
+          <Text style={styles.text} keyboardType="decimal-pad">Preço da Diaria:</Text>
           <TextInput
             onChangeText={setHotelPrice}
             placeholder="R$"
-            style={style.input}
+            style={styles.input}
           />
         </View>
       </View>
-      <Text style={style.statusMessage}>{status}</Text>
+      <Text style={styles.statusMessage}>{status}</Text>
       {isLoading ? <ActivityIndicator size={30} color="blue" /> : <Text></Text> }
-      <Pressable onPress={submitEvent}><Text style={style.registerButton}>Cadastra Evento</Text></Pressable>
+      <Pressable onPress={submitEvent}><Text style={styles.registerButton}>Cadastra Evento</Text></Pressable>
     </View>
   );
 }
 
-const styleVertical = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
-    padding: 5,
+    paddingVertical: '2%',
+    paddingHorizontal: '5%',
   },
   title: {
-    fontSize: 20,
+    fontSize: 20, 
   },
   form: {
     width: '95%',
@@ -301,7 +291,7 @@ const styleVertical = StyleSheet.create({
     borderColor: 'gray',
   },
   formTitle: {
-    fontSize: 16,
+    fontSize: 16, 
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
   },
@@ -309,7 +299,6 @@ const styleVertical = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    height: 'auto',
     padding: 2,
     marginVertical: 10,
   },
@@ -341,9 +330,4 @@ const styleVertical = StyleSheet.create({
   }
 });
 
-const styleHorizontal = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-  },
-});
+

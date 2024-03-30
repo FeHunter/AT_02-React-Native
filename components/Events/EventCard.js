@@ -3,13 +3,17 @@ import Routes from '../../assets/Routes';
 
 export function EventCard({ item, navigation }) {
 
+  // Imagem padrão caso não seja fornicida alguma outra
+  const imagem = item.imagem !== "" ?
+    item.imagem: 'https://cdn.pixabay.com/photo/2017/11/24/10/43/ticket-2974645_1280.jpg';
+
   return (
     <Pressable
       style={styles.card}
       onPress={() => {
         navigation.navigate(Routes.eventDetails, {item: item});
       }}>
-      <Image source={{ uri: item.imagem }} style={styles.imagem} />
+      <Image source={{ uri: imagem }} style={styles.imagem} />
       <View style={styles.infosContent}>
         <Text style={styles.title}>{item.titulo}</Text>
         <Text style={styles.preco}>R${item.preco}</Text>

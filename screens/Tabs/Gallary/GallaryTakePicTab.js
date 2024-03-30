@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, Image, FlatList, StyleSheet, Platform } from 'react-native';
 import { Camera } from 'expo-camera';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import firebase from '../Assets/Firebase';
+// import firebase from '../../../assets/Firebase';
 import firebaseRoutes from '../../../assets/FirebaseRoutes';
 
 export function GallaryTakePicTab() {
+
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState(null);
@@ -36,7 +37,7 @@ export function GallaryTakePicTab() {
   // Enviar foto para storage do firebase
   async function savePhoto (){
     try {
-      const firebaseStorage = getStorage(firebase);
+      const firebaseStorage = getStorage(firebaseConfig);
       const photoRef = ref(firebaseStorage, `Gallary Pictures ${new Date().getTime}.png`);
       const uploadResult = await uploadString(photoRef, photoUri, {
         encoding: 'base64',
