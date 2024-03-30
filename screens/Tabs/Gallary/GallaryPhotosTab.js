@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Text, Image, FlatList, StyleSheet, Pressable, Dimensions, Platform } from 'react-native';
+import { View, ScrollView, Text, FlatList, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FirebaseRoutes from '../../../assets/FirebaseRoutes';
 import { ImageCard } from '../../../components/gallary/ImageCard';
 import app from '../../../assets/Firebase';
-import { getStorage, ref, uploadString, getDownloadURL, listAll } from 'firebase/storage';
+import { getStorage, ref, getDownloadURL, listAll } from 'firebase/storage';
 
 export function GallaryPhotosTab ({navigation}){
 
@@ -72,11 +72,11 @@ export function GallaryPhotosTab ({navigation}){
     <View style={styles.container}>
       <Text style={styles.title}>Minha galeria</Text>
       {status !== '' && <Text>{status}</Text>}
-      <ScrollView contentContainerStyle={[styles.imgContainer, horizontal && { flexDirection: 'row' }]}>
-        { gallary === null ?
+      { gallary === null ?
           <Text>Galeria Vazia</Text>
           :
           <FlatList
+            contentContainerStyle={styles.list}
             data={gallary}
             keyExtractor={(item, index) => index.toString()}
             horizontal={horizontal}
@@ -85,7 +85,6 @@ export function GallaryPhotosTab ({navigation}){
             } }
           />
         }
-      </ScrollView>
     </View>
   );
 }
@@ -93,60 +92,20 @@ export function GallaryPhotosTab ({navigation}){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
   },
   title: {
     fontSize: 20,
     textAlign: 'center',
     marginVertical: 5,
   },
-  imgContainer: {
-    height: 700,
-  },
-  image: {
+  list: {
     width: '100%',
-    height: 250,
-    margin: 10,
-    resizeMode: 'contain',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
-  buttonText: {
-    fontSize: 20,
-    color: 'white'
-  },
-  ...Platform.select({
-    android: {
-      button: {
-        width: '100%',
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        backgroundColor: '#556b2f',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }
-    },
-    ios: {
-      button: {
-        width: '100%',
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        backgroundColor: '#191970',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }
-    },
-    web: {
-      button: {
-        width: '100%',
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        backgroundColor: '#800020',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }
-    }
-  })
 });
