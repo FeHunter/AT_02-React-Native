@@ -8,12 +8,34 @@ import {
   Picker,
 } from 'react-native';
 import { useEffect, useState } from 'react';
+import { getAssetByID } from 'react-native-web/dist/cjs/modules/AssetRegistry';
 
 export function FormRegisterEvent() {
+
+  const urlAPi = "https://eventos-at02-react-native-default-rtdb.firebaseio.com/";
+  const sourceEvents = "Events";
+
   const [orientation, setOrientation] = useState(false);
-  const [status, setStatus] = useState('Enviado com sucesso!');
+  const [status, setStatus] = useState('-');
+  const [events, setEvents] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Form Event
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [address, setAddress] = useState('');
+  const [date, setDate] = useState('');
+  const [price, setPrice] = useState('');
+  // Form Hotel
+  const [hotelName, setHotelName] = useState('');
+  const [hotelPrice, setHotelPrice] = useState('');
+  const [hotelAddress, setHotelAddress] = useState('');
+  const [hotelDetails, setHotelDetails] = useState('');
 
   useEffect(() => {
+
+    loadEvents();
+
     // Orientação
     const updateOrientation = () => {
       const { width, height } = Dimensions.get('window');
@@ -24,6 +46,73 @@ export function FormRegisterEvent() {
       Dimensions.removeEventListener('change', updateOrientation);
     };
   });
+
+  async function loadEvents (){
+    await fetch(`${urlAPi}${sourceEvents}.json`)
+    .then(res => res.json())
+    .then(res => {
+      setEvents(res);
+    })
+    .catch(error => { console.log(error.message) })
+    .finally(res => setIsLoading(false));
+  }
+
+  function submitEvent (){
+    // Validação
+    // if(title.length < 3 || description.length < 3 || address.length < 3 || hotelAddress.length < 3 || hotelName.length < 3 || hotelDetails.length < 3){
+    //   setStatus("Preencher campos corretamente");
+    //   setTimeout(() => {
+    //     setStatus("-");
+    //   }, 2000);
+    //   return;
+    // }
+    const convertedDate = convertDateToTimestamp(`${dateDay}/${dateMonth}/${dateYear}`);
+    const event = {
+      data: parseInt(convertedDate),
+      titulo: title,
+      descricao: description,
+      endereco: address,
+      preco: price,
+      hospedagem: {
+        diaria: hotelPrice,
+        endereco: hotelAddress,
+        hotel: hotelName,
+        informacoes: hotelDetails,
+      }
+    }
+    console.log(event);
+    // Salva na API
+    saveEvent(event);
+  }
+
+  async function saveEvent (eventData) {
+    let upt = [...events];
+    upt.push(eventData);
+    upt = JSON.stringify(upt);
+    await fetch(`${urlAPi}${sourceEvents}.json`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: upt
+    })
+    .then(res => {
+      setStatus("Enviado com sucesso!");
+      setTimeout(() => {
+        setStatus("-");
+      }, 2000);
+    })
+    .catch(error => {
+      setStatus("Algo deu errado, tente novamente");
+      console.log(error.message);
+    })
+  }
+
+  function convertDateToTimestamp(dateString) {
+    const reversedDateString = dateString.split('/').reverse().join('/');
+    const timestamp = Date.parse(reversedDateString);
+    return timestamp;
+  }
 
   const style = orientation ? styleHorizontal : styleVertical;
 
@@ -52,11 +141,12 @@ export function FormRegisterEvent() {
         <Text style={style.formTitle}>Informações do Evento</Text>
         <View style={style.textCard}>
           <Text style={style.text}>Nome:</Text>
-          <TextInput placeholder="digite..." style={style.input} />
+          <TextInput onChangeText={setTitle} placeholder="digite..." style={style.input} />
         </View>
         <View style={style.textCard}>
           <Text style={style.text}>Descrição:</Text>
           <TextInput
+            onChangeText={setDescription}
             placeholder="digite..."
             multiline
             numberOfLines={3}
@@ -66,6 +156,7 @@ export function FormRegisterEvent() {
         <View style={style.textCard}>
           <Text style={style.text}>Local Endereço:</Text>
           <TextInput
+            onChangeText={setAddress}
             placeholder="digite..."
             multiline
             numberOfLines={2}
@@ -74,7 +165,11 @@ export function FormRegisterEvent() {
         </View>
         <View style={style.textCard}>
           <Text style={style.text} keyboardType="decimal-pad">Preço:</Text>
-          <TextInput placeholder="R$" style={style.input} />
+          <TextInput
+            onChangeText={setPrice}
+            placeholder="R$"
+            style={style.input}
+          />
         </View>
         <View style={style.textCard}>
         <View style={style.dataSelectCard}>
@@ -116,11 +211,26 @@ export function FormRegisterEvent() {
         <Text style={style.formTitle}>Informações Sobre hospedagem</Text>
         <View style={style.textCard}>
           <Text style={style.text}>Nome:</Text>
-          <TextInput placeholder="digite..." style={style.input} />
+          <TextInput
+            onChangeText={setHotelName}
+            placeholder="digite..."
+            style={style.input}
+          />
         </View>
         <View style={style.textCard}>
           <Text style={style.text}>Endereço Hotel:</Text>
           <TextInput
+            onChangeText={setHotelAddress}
+            placeholder="digite..."
+            multiline
+            numberOfLines={2}
+            style={style.input}
+          />
+        </View>
+        <View style={style.textCard}>
+          <Text style={style.text}>Detalhes Hotel:</Text>
+          <TextInput
+            onChangeText={setHotelDetails}
             placeholder="digite..."
             multiline
             numberOfLines={2}
@@ -129,11 +239,15 @@ export function FormRegisterEvent() {
         </View>
         <View style={style.textCard}>
           <Text style={style.text} keyboardType="decimal-pad">Preço da Diaria:</Text>
-          <TextInput placeholder="R$" style={style.input} />
+          <TextInput
+            onChangeText={setHotelPrice}
+            placeholder="R$"
+            style={style.input}
+          />
         </View>
       </View>
       <Text style={style.statusMessage}>{status}</Text>
-      <Pressable><Text style={style.registerButton}>Cadastra Evento</Text></Pressable>
+      <Pressable onPress={submitEvent}><Text style={style.registerButton}>Cadastra Evento</Text></Pressable>
     </View>
   );
 }
