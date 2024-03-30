@@ -63,7 +63,7 @@ const styleVertical = StyleSheet.create({
   },
   preco: {
     flexDirection: 'row',
-    flexWrap: 'wrrap',
+    flexWrap: 'wrap',
     fontSize: 18,
     fontStyle: 'italic',
   },

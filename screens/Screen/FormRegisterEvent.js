@@ -45,12 +45,12 @@ export function FormRegisterEvent() {
         <Text style={style.formTitle}>Informações do Evento</Text>
         <View style={style.textCard}>
           <Text style={style.text}>Nome:</Text>
-          <TextInput placeholder="evento..." style={style.input} />
+          <TextInput placeholder="digite..." style={style.input} />
         </View>
         <View style={style.textCard}>
           <Text style={style.text}>Descrição:</Text>
           <TextInput
-            placeholder="descrição..."
+            placeholder="digite..."
             multiline
             numberOfLines={3}
             style={style.input}
@@ -59,7 +59,7 @@ export function FormRegisterEvent() {
         <View style={style.textCard}>
           <Text style={style.text}>Local Endereço:</Text>
           <TextInput
-            placeholder="av..."
+            placeholder="digite..."
             multiline
             numberOfLines={2}
             style={style.input}
@@ -109,12 +109,12 @@ export function FormRegisterEvent() {
         <Text style={style.formTitle}>Informações Sobre hospedagem</Text>
         <View style={style.textCard}>
           <Text style={style.text}>Nome:</Text>
-          <TextInput placeholder="hotel..." style={style.input} />
+          <TextInput placeholder="digite..." style={style.input} />
         </View>
         <View style={style.textCard}>
           <Text style={style.text}>Endereço Hotel:</Text>
           <TextInput
-            placeholder="rua..."
+            placeholder="digite..."
             multiline
             numberOfLines={2}
             style={style.input}
@@ -126,7 +126,7 @@ export function FormRegisterEvent() {
         </View>
       </View>
       <Text style={style.statusMessage}>{status}</Text>
-      <Pressable style={style.registerButton}>Cadastra Evento</Pressable>
+      <Pressable><Text style={style.registerButton}>Cadastra Evento</Text></Pressable>
     </View>
   );
 }
@@ -143,7 +143,7 @@ const styleVertical = StyleSheet.create({
     fontSize: 20,
   },
   form: {
-    width: '90%',
+    width: '95%',
     padding: 10,
     borderWidth: 1,
     borderColor: 'gray',
@@ -165,13 +165,12 @@ const styleVertical = StyleSheet.create({
     fontSize: 16,
   },
   input: {
-    width: 200,
+    width: '70%',
     borderWidth: 1,
     padding: 1,
   },
   registerButton: {
     textAlign: 'center',
-    width: '50%',
     padding: 10,
     color: 'white',
     backgroundColor: 'green',

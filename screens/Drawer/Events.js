@@ -7,12 +7,15 @@ import {
   Dimensions,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import EventsList from '../../assets/EventsList';
 
 import { EventCard } from '../../components/Events/EventCard';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 
 export function Events({ navigation }) {
+
+  const urlAPi = "https://eventos-at02-react-native-default-rtdb.firebaseio.com/";
+  const sourceEvents = "Events";
+
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,10 +23,8 @@ export function Events({ navigation }) {
   const [orientation, setOrientation] = useState(false);
 
   useEffect(() => {
-    setEvents(EventsList);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, [500]);
+
+    loadEvents();
 
     // Orientação
     const updateOrientation = () => {
@@ -35,6 +36,17 @@ export function Events({ navigation }) {
       Dimensions.removeEventListener('change', updateOrientation);
     };
   }, []);
+
+  async function loadEvents (){
+    setIsLoading(true);
+    await fetch(`${urlAPi}${sourceEvents}.json`)
+    .then(res => res.json())
+    .then(res => {
+      setEvents(res);
+    })
+    .catch(error => { console.log(error.message) })
+    .finally(res => setIsLoading(false));
+  }
 
   function getSearchTerm(term) {
     setSearchTerm(term);

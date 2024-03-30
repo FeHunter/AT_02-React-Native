@@ -45,6 +45,7 @@ const styleVertical = StyleSheet.create({
   imagem: {
     width: '100%',
     height: 300,
+    resizeMode: 'contain',
   },
   card: {
     width: '70%',
