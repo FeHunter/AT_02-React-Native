@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import FirebaseRoutes from '../../../assets/FirebaseRoutes';
 import { ImageCard } from '../../../components/gallary/ImageCard';
 import app from '../../../assets/Firebase';
-import { getStorage, ref, getDownloadURL, listAll } from 'firebase/storage';
+import { getStorage, ref, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
 
 export function GallaryPhotosTab ({navigation}){
 
@@ -13,7 +13,7 @@ export function GallaryPhotosTab ({navigation}){
 
   useEffect(()=>{
     getPhotos();
-  }, []);
+  }, [gallary]);
 
   // Orientation
   const [horizontal, setHorizontal] = useState(false);
@@ -40,31 +40,15 @@ export function GallaryPhotosTab ({navigation}){
     }
   }
 
-  function removeFoto (photo){
-      let update = [];
-      update = [... gallary];
-      if (update.indexOf(photo) > 0){
-        update.splice(update.indexOf(photo), 1)
-      }else {
-        update.shift();
-      }
-      setGallary(update);
-      setStatus('removendo...');
-
-      fetch(`${FirebaseRoutes.mainURL}${FirebaseRoutes.gallary}.json`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(update)
-        })
-        .then(res => {
-          setStatus("Foto removida");
-          setTimeout(() => {
-            setStatus('');
-          }, 1000);
-        })
-        .catch(error => console.log(error.message));
+  const deletePhoto = async (photoUrl) => {
+    try {
+      const firebaseStorage = getStorage(app);
+      const photoRef = ref(firebaseStorage, photoUrl); // A URL do Firebase Storage é o caminho completo do arquivo
+      await deleteObject(photoRef);
+      getPhotos(); // Atualiza a lista de fotos após deletar a foto
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
 
@@ -81,7 +65,7 @@ export function GallaryPhotosTab ({navigation}){
             keyExtractor={(item, index) => index.toString()}
             horizontal={horizontal}
             renderItem={ ({item}) => {
-              return <ImageCard image={item} removeFoto={removeFoto} />
+              return <ImageCard image={item} removePhoto={deletePhoto} />
             } }
           />
         }
